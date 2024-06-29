@@ -46,8 +46,8 @@ jobs:
             fi
 
             # Clone the Strapi repository
-            git clone https://github.com/ashitha99/new-strapi.git
-            cd new-strapi
+            git clone https://github.com/ashitha99/strapi.git
+            cd strapi
 
             # Install Strapi globally
             sudo npm install strapi@beta -g
