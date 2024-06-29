@@ -18,8 +18,20 @@ jobs:
         with:
           node-version: '14'  # Adjust Node.js version as per your requirements
 
+      - name: Fix dpkg interrupted error
+        run: sudo dpkg --configure -a
+
+      - name: Update and upgrade system packages
+        run: |
+          sudo apt update
+          sudo apt upgrade -y
+
+      - name: Install Node.js and npm
+        run: |
+          sudo apt install -y nodejs npm
+
       - name: Upgrade npm
-        run: npm install -g npm@8  # Install npm version 8 which supports Node.js 14
+        run: sudo npm install -g npm@8  # Install npm version 8 which supports Node.js 14
 
       - name: Clear npm cache
         run: npm cache clean --force
@@ -32,13 +44,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             set -e
-
-            # Update the package list and upgrade packages
-            sudo apt update
-            sudo apt upgrade -y
-
-            # Install Node.js and npm if not installed
-            sudo apt install -y nodejs npm
 
             # Check if the 'new-strapi' directory exists and is not empty, and remove it if necessary
             if [ -d "new-strapi" ]; then
